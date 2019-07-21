@@ -1,7 +1,9 @@
 # Spring Cloud Gateway and Eureka
 - Spring Eureka Server
 
-Overview
+[Spring Cloud Gateway] -> [Spring Eureka Client App]
+                     \    /
+             [Spring Eureka Server]
 
 ## Description
 - [Eureka Server](https://github.com/shinyay/spring-cloud-eureka-getting-started)
