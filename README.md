@@ -9,6 +9,9 @@ Overview
 - [Spring Cloud Gateway](https://github.com/shinyay/spring-cloud-eureka-gateway-getting-started)
 
 ## Demo
+1. Run Eureka Server
+2. Run Eureka Client App
+3. Run Gateway
 
 ## Features
 
