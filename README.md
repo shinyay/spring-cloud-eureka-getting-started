@@ -4,6 +4,9 @@
 Overview
 
 ## Description
+- [Eureka Server](https://github.com/shinyay/spring-cloud-eureka-getting-started)
+- [Eureka Client App](https://github.com/shinyay/spring-cloud-eureka-client-getting-started)
+- [Spring Cloud Gateway](https://github.com/shinyay/spring-cloud-eureka-gateway-getting-started)
 
 ## Demo
 
