@@ -1,19 +1,14 @@
-FROM openjdk:8-jdk-alpine as build
-WORKDIR /workspace/app
- 
-COPY gradlew .
-COPY gradle gradle
-COPY build.gradle.kts .
-RUN ./gradlew dependencies
- 
-COPY src src
-RUN ./gradlew build unpack -x test
-RUN mkdir -p build/dependency && (cd build/dependency; jar -xf ../libs/*.jar)
- 
+FROM gradle:5.4.1-jdk8-alpine AS build
+COPY --chown=gradle:gradle . /home/gradle/src
+WORKDIR /home/gradle/src
+RUN gradle build --no-daemon 
+
 FROM openjdk:8-jre-alpine
-VOLUME /tmp
-ARG DEPENDENCY=/workspace/app/build/dependency
-COPY --from=build ${DEPENDENCY}/BOOT-INF/lib /app/lib
-COPY --from=build ${DEPENDENCY}/META-INF /app/META-INF
-COPY --from=build ${DEPENDENCY}/BOOT-INF/classes /app
-ENTRYPOINT ["java","-cp","app:app/lib/*","FULL_NAME_OF_SPRING_BOOT_MAIN_CLASS"]
+
+EXPOSE 8080
+
+RUN mkdir /app
+
+COPY --from=build /home/gradle/src/build/libs/*.jar /app/spring-boot-application.jar
+
+ENTRYPOINT ["java", "-XX:+UnlockExperimentalVMOptions", "-XX:+UseCGroupMemoryLimitForHeap", "-Djava.security.egd=file:/dev/./urandom","-jar","/app/spring-boot-application.jar"]
